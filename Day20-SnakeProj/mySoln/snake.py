@@ -4,7 +4,7 @@ import time
 
 # Globals
 
-snake = Snake(360)
+snake = Snake()
 
 
 def up():
@@ -30,7 +30,6 @@ if __name__ == "__main__":
     screen.tracer(0)
     screen.listen()
 
-
     screen.onkey(up, "Up")
     screen.onkey(down, "Down")
     screen.onkey(left, "Left")
@@ -41,6 +40,5 @@ if __name__ == "__main__":
         time.sleep(.1)
         snake.moveForward()
         screen.update()
-
 
     screen.exitonclick()

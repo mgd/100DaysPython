@@ -5,22 +5,30 @@ direction = {'n': 90, 'up': 90, 's': 270, 'down': 270, 'e': 0, 'right': 0, 'w': 
 
 class Snake:
 
-    def __init__(self, currentHeading):
-        s = Turtle()
-        s.color("white")
+    def __init__(self):
+        self.makeGrid()
         self.Snakes = []
-        self.Snakes.append(self.newSnake(0, 0, direction['e']))
-        self.food = self.newFood()
+        self.Snakes.append(self.newSnake(0, 0))
+        self.newFood()
 
+    def makeGrid(self):
+        grid = Turtle()
+        grid.speed('fastest')
+        grid.color('blue')
+        grid.hideturtle()
+        grid.penup()
+        grid.goto(-250, -250)
+        grid.pendown()
+        grid.goto(-250, 250)
+        grid.goto(250, 250)
+        grid.goto(250, -250)
+        grid.goto(-250, -250)
 
-    def newSnake(self, x, y, angle):
-        if angle == 0:
-            angle = 360
+    def newSnake(self, x, y):
         new = Turtle()
         new.penup()
-        new.degrees(angle)
         new.color("white")
-        new.shape("square")
+        new.shape("circle")
         new.setposition(x, y)
         return new
 
@@ -35,31 +43,42 @@ class Snake:
 
         if self.food.pos() == self.Snakes[0].pos():
             print("hit")
-            self.food = self.newFood()
-            self.Snakes.append(self.newSnake(lastx, lasty, 0))
+            self.refresh()
+            self.Snakes.append(self.newSnake(lastx, lasty))
 
     def newFood(self):
-        pos = randint(-25, 25) * 10, randint(-25, 25) * 10
-        food = Turtle()
-        food.penup()
-        food.shape("square")
-        food.color("white")
-        food.goto(pos)
-        return food
+        self.food = Turtle()
+        self.food.penup()
+        self.food.shape("square")
+        self.food.color("blue")
+        self.refresh()
+
+    def refresh(self):
+        pos = randint(-24, 24) * 10, randint(-24, 24) * 10
+        self.food.goto(pos)
 
     def alive(self):
         head = self.Snakes[0]
 
         if head.xcor() == 250 or head.xcor() == -250:
+            self.gameOver()
             return False
         elif head.ycor() == 250 or head.ycor() == -250:
+            self.gameOver()
             return False
 
         for snake in self.Snakes[1:]:
             if snake.pos() == head:
+                self.gameOver()
                 return False
 
         return True
+
+    def gameOver(self):
+        over = Turtle()
+        over.hideturtle()
+        over.color("white")
+        over.write("GAME OVER", align="center", font=("Arial", 24, "normal"))
 
     def down(self):
         heading = self.Snakes[0].heading()
