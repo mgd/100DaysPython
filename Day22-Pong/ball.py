@@ -13,6 +13,7 @@ class Ball(Turtle):
 
     def paddle_bounce(self):
         self.setheading(270 + self.heading())
+        self.forward(10)
 
     def top_bounce(self):
         self.setheading(360 - self.heading())
