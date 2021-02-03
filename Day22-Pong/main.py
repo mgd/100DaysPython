@@ -47,7 +47,7 @@ if __name__ == "__main__":
     ball = Ball()
     game = True
     while game:
-        screen.update()
+
         #Check if Ball hit top or botom wall
         x, y = ball.pos()
         if y >= 240:
@@ -67,8 +67,9 @@ if __name__ == "__main__":
                 if p.distance(ball) < 20:
                     ball.paddle_bounce()
                     p1Score.increase()
+
         ball.forward(5)
         if x >= 430 or x <= -430:
-
             game = False
+        screen.update()
     screen.exitonclick()
